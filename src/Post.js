@@ -1,4 +1,4 @@
-class Post {
+export class Post {
     constructor(title) {
         this.title = title;
         this.date = new Date();

@@ -9,7 +9,7 @@
     "webpack:development": "node --max-old-space-size=8192 ./node_modules/webpack-cli/bin/cli.js build --mode development",
     "webpack:production": "node --max-old-space-size=8192 ./node_modules/webpack-cli/bin/cli.js build --mode production"
   },
-  "author": "",
+  "author": "Pavel Chekushkin",
   "license": "ISC",
   "devDependencies": {
     "clean-webpack-plugin": "^4.0.0",

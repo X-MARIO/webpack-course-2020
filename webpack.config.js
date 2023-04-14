@@ -127,7 +127,7 @@ module.exports = {
                 use: ['xml-loader'],
             },
             {
-                test: /\.csv/,
+                test: /\.csv$/,
                 use: ['csv-loader'],
             },
             {
@@ -139,6 +139,19 @@ module.exports = {
                         presets: [
                             ['@babel/preset-env', {targets: "defaults"}]
                         ]
+                    }
+                }
+            },
+            {
+                test: /\.ts$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: [
+                            ['@babel/preset-env', {targets: "defaults"}]
+                        ],
+                        plugins: [],
                     }
                 }
             }

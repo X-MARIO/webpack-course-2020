@@ -4,9 +4,28 @@ const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 const isProduction = process.env.NODE_ENV === 'production';
+
+const optimization = () => {
+
+    const config = {
+        splitChunks: {
+            chunks: "all",
+        }
+    }
+
+    if (isProduction) {
+        config.minimizer = [
+            new TerserPlugin(),
+            new CssMinimizerPlugin(),
+        ]
+    }
+
+    return config;
+}
 console.log('isDevelopment', isDevelopment);
 console.log('isProduction', isProduction);
 
@@ -32,14 +51,7 @@ module.exports = {
             '@': path.resolve(__dirname, 'src')
         }
     },
-    optimization: {
-        splitChunks: {
-            chunks: "all",
-        },
-        minimizer: [
-            new CssMinimizerPlugin(),
-        ]
-    },
+    optimization: optimization(),
     devServer: {
         port: 4200,
         hot: isDevelopment,

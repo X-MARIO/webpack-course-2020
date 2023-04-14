@@ -2,6 +2,10 @@ const path = require('path');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+const isDevelopment = process.env.NODE_ENV === 'development';
+console.log('isDevelopment', isDevelopment);
 
 module.exports = {
     context: path.resolve(__dirname, 'src'),
@@ -32,6 +36,7 @@ module.exports = {
     },
     devServer: {
         port: 4200,
+        hot: isDevelopment,
     },
     plugins: [
         new HTMLWebpackPlugin({
@@ -45,13 +50,25 @@ module.exports = {
                     to: path.resolve(__dirname, 'dist'),
                 }
             ]
+        }),
+        new MiniCssExtractPlugin({
+            filename: '[name].[contenthash].css',
         })
     ],
     module: {
         rules: [
             {
                 test: /\.css$/,
-                use: ['style-loader', 'css-loader'],
+                use: [
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {
+                            // hrm: isDevelopment,
+                            // reloadAll: true,
+                        },
+                    },
+                    'css-loader'
+                ],
             },
             {
                 test: /\.(png|jpg|svg|gif)$/,

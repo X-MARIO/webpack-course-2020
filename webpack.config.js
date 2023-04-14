@@ -92,6 +92,19 @@ module.exports = {
                 ],
             },
             {
+                test: /\.less$/,
+                use: [
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {
+                            // hrm: isDevelopment,
+                            // reloadAll: true,
+                        },
+                    },
+                    'css-loader'
+                ],
+            },
+            {
                 test: /\.(png|jpg|svg|gif)$/,
                 type: 'asset/resource',
             },

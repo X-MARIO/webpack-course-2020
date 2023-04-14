@@ -7,9 +7,12 @@ export class Post {
 
     toString() {
         return JSON.stringify({
-            title: this.title,
-            date: this.date.toJSON(),
-            img: this.img,
-        })
+                title: this.title,
+                date: this.date.toJSON(),
+                img: this.img,
+            },
+            null,
+            2,
+        )
     }
 }

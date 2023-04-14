@@ -10,7 +10,7 @@ const post = new Post('Webpack Post Title', WebpackLogo);
 
 console.log('$', $)
 
-$('pre').html(post.toString()); //HTML
+$('pre').addClass('code').html(post.toString()); //HTML
 
 console.log('Post to String', post.toString());
 

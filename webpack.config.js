@@ -5,6 +5,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
+const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 const isProduction = process.env.NODE_ENV === 'production';
@@ -50,8 +51,34 @@ const cssLoaders = (ext) => {
     return loaders;
 }
 
-console.log('isDevelopment', isDevelopment);
-console.log('isProduction', isProduction);
+const plugins = () => {
+    const base = [
+        new HTMLWebpackPlugin({
+            template: "./index.html",
+            minify: {
+                collapseWhitespace: isProduction,
+            }
+        }),
+        new CleanWebpackPlugin(),
+        new CopyWebpackPlugin({
+            patterns: [
+                {
+                    from: path.resolve(__dirname, 'src/favicon.ico'),
+                    to: path.resolve(__dirname, 'dist'),
+                }
+            ]
+        }),
+        new MiniCssExtractPlugin({
+            filename: filename('css'),
+        })
+    ];
+
+    if (isProduction) {
+        base.push(new BundleAnalyzerPlugin());
+    }
+
+    return base;
+}
 
 module.exports = {
     context: path.resolve(__dirname, 'src'),
@@ -80,27 +107,8 @@ module.exports = {
         port: 4200,
         hot: isDevelopment,
     },
-    devtool: isDevelopment ? 'source-map' : '',
-    plugins: [
-        new HTMLWebpackPlugin({
-            template: "./index.html",
-            minify: {
-                collapseWhitespace: isProduction,
-            }
-        }),
-        new CleanWebpackPlugin(),
-        new CopyWebpackPlugin({
-            patterns: [
-                {
-                    from: path.resolve(__dirname, 'src/favicon.ico'),
-                    to: path.resolve(__dirname, 'dist'),
-                }
-            ]
-        }),
-        new MiniCssExtractPlugin({
-            filename: filename('css'),
-        })
-    ],
+    devtool: isDevelopment ? 'source-map' : undefined,
+    plugins: plugins(),
     module: {
         rules: [
             {

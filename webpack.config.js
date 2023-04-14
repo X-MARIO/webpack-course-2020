@@ -31,6 +31,25 @@ const filename = (ext) => {
     return isDevelopment ? `[name].${ext}` : `[name].[hash].${ext}`;
 }
 
+const cssLoaders = (ext) => {
+    const loaders = [
+        {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+                // hrm: isDevelopment,
+                // reloadAll: true,
+            },
+        },
+        'css-loader'
+    ];
+
+    if (ext) {
+        loaders.push(ext);
+    }
+
+    return loaders;
+}
+
 console.log('isDevelopment', isDevelopment);
 console.log('isProduction', isProduction);
 
@@ -85,44 +104,15 @@ module.exports = {
         rules: [
             {
                 test: /\.css$/,
-                use: [
-                    {
-                        loader: MiniCssExtractPlugin.loader,
-                        options: {
-                            // hrm: isDevelopment,
-                            // reloadAll: true,
-                        },
-                    },
-                    'css-loader'
-                ],
+                use: cssLoaders(),
             },
             {
                 test: /\.less$/,
-                use: [
-                    {
-                        loader: MiniCssExtractPlugin.loader,
-                        options: {
-                            // hrm: isDevelopment,
-                            // reloadAll: true,
-                        },
-                    },
-                    'css-loader',
-                    'less-loader'
-                ],
+                use: cssLoaders('less-loader'),
             },
             {
                 test: /\.s[ac]ss$/,
-                use: [
-                    {
-                        loader: MiniCssExtractPlugin.loader,
-                        options: {
-                            // hrm: isDevelopment,
-                            // reloadAll: true,
-                        },
-                    },
-                    'css-loader',
-                    'sass-loader'
-                ],
+                use: cssLoaders('sass-loader'),
             },
             {
                 test: /\.(png|jpg|svg|gif)$/,

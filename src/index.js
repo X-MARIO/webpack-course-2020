@@ -8,7 +8,7 @@ import './styles/styles.css';
 
 const post = new Post('Webpack Post Title', WebpackLogo);
 
-console.log('$', $)
+console.log('$12', $)
 
 $('pre').addClass('code').html(post.toString()); //HTML
 
@@ -17,3 +17,4 @@ console.log('Post to String', post.toString());
 console.log('json', json);
 console.log('xml', xml);
 console.log('csv', csv);
+console.log('csv1', csv);

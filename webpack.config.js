@@ -26,6 +26,11 @@ const optimization = () => {
 
     return config;
 }
+
+const filename = (ext) => {
+    return isDevelopment ? `[name].${ext}` : `[name].[hash].${ext}`;
+}
+
 console.log('isDevelopment', isDevelopment);
 console.log('isProduction', isProduction);
 
@@ -37,7 +42,7 @@ module.exports = {
         analytics: './analytics.js',
     },
     output: {
-        filename: '[name].[contenthash].js',
+        filename: filename('js'),
         path: path.resolve(__dirname, 'dist'),
     },
     resolve: {
@@ -73,7 +78,7 @@ module.exports = {
             ]
         }),
         new MiniCssExtractPlugin({
-            filename: '[name].[contenthash].css',
+            filename: filename('css'),
         })
     ],
     module: {

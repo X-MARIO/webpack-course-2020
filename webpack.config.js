@@ -2,7 +2,8 @@ const path = require('path');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 const isProduction = process.env.NODE_ENV === 'production';
@@ -34,7 +35,10 @@ module.exports = {
     optimization: {
         splitChunks: {
             chunks: "all",
-        }
+        },
+        minimizer: [
+            new CssMinimizerPlugin(),
+        ]
     },
     devServer: {
         port: 4200,
